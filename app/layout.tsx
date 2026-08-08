@@ -1,5 +1,10 @@
 import type { Metadata } from 'next';
+import 'bootstrap-icons/font/bootstrap-icons.css';
 import './globals.css';
+import Navbar from '@/components/Navbar';
+import Footer from '@/components/Footer';
+import CookieBanner from '@/components/CookieBanner';
+import RevealObserver from '@/components/RevealObserver';
 
 export const metadata: Metadata = {
   title: 'African Centre for Law and Public Interest Technology | Law, Technology and the Public Interest in Africa',
@@ -10,7 +15,13 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        <Navbar />
+        {children}
+        <Footer />
+        <CookieBanner />
+        <RevealObserver />
+      </body>
     </html>
   );
 }
