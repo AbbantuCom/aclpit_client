@@ -5,6 +5,7 @@ import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import CookieBanner from '@/components/CookieBanner';
 import RevealObserver from '@/components/RevealObserver';
+import QueryProvider from '@/components/QueryProvider';
 
 export const metadata: Metadata = {
   title: 'African Centre for Law and Public Interest Technology | Law, Technology and the Public Interest in Africa',
@@ -16,11 +17,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en">
       <body>
-        <Navbar />
-        {children}
-        <Footer />
-        <CookieBanner />
-        <RevealObserver />
+        <QueryProvider>
+          <Navbar />
+          {children}
+          <Footer />
+          <CookieBanner />
+          <RevealObserver />
+        </QueryProvider>
       </body>
     </html>
   );
