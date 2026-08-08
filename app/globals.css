@@ -1,0 +1,76 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Brand system derived from the ACLPIT logo — ported from _legacy/css/style.css */
+:root {
+  --color-wine: #5E0E3A;
+  --color-wine-deep: #40082A;
+  --color-wine-soft: #7A2352;
+  --color-ivory: #FAF6EF;
+  --color-sand: #EFE5D6;
+  --color-stone: #DCCFBB;
+  --color-ink: #241521;
+  --color-muted: #6B5A64;
+
+  --font-body: Arial, 'Helvetica Neue', Helvetica, sans-serif;
+
+  --radius-arch: 200px;
+  --radius-card: 14px;
+  --shadow-brand: 0 18px 40px rgba(64, 8, 42, 0.10);
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 96px;
+}
+
+body {
+  font-family: var(--font-body);
+  font-size: 18px;
+  line-height: 1.7;
+  color: var(--color-ink);
+  background: var(--color-ivory);
+}
+
+h1, h2, h3, h4, h5 {
+  font-family: var(--font-body);
+  font-weight: 700;
+  color: var(--color-ink);
+  line-height: 1.18;
+  letter-spacing: -0.01em;
+}
+
+::selection {
+  background: var(--color-wine);
+  color: #FFFFFF;
+}
+
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: 3px solid var(--color-wine);
+  outline-offset: 3px;
+  box-shadow: none !important;
+}
+
+/* Scroll-reveal: elements start hidden and fade/slide in once observed as visible */
+.reveal {
+  opacity: 0;
+  transform: translateY(34px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+.reveal.visible {
+  opacity: 1;
+  transform: none;
+}
+.reveal-delay-1 { transition-delay: 0.12s; }
+.reveal-delay-2 { transition-delay: 0.24s; }
+.reveal-delay-3 { transition-delay: 0.36s; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .reveal { opacity: 1; transform: none; transition: none; }
+}
