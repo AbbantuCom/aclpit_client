@@ -40,7 +40,7 @@ export default function Navbar() {
         scrolled ? 'shadow-[0_10px_30px_rgba(64,8,42,0.12)] py-2' : 'py-3.5'
       }`}
     >
-      <div className="max-w-7xl mx-auto px-6 flex items-center justify-between lg:flex-nowrap flex-wrap">
+      <div className="w-full px-6 lg:px-16 flex items-center justify-between lg:flex-nowrap flex-wrap">
         <Link href="/" className="flex items-center gap-3.5 shrink-0">
           <Img src="/assets/logo-icon.png" alt="ACLPIT logo" className="h-[52px] w-auto" />
           <span className="leading-tight">
@@ -63,7 +63,7 @@ export default function Navbar() {
 
         <div
           id="mainNav"
-          className={`${open ? 'flex' : 'hidden'} lg:flex w-full lg:w-auto flex-col lg:flex-row lg:items-center gap-1 lg:gap-2 mt-3 lg:mt-0 lg:ms-auto lg:flex-nowrap`}
+          className={`${open ? 'flex' : 'hidden'} lg:flex w-full lg:w-auto flex-col lg:flex-row lg:items-center gap-1 lg:gap-5 mt-3 lg:mt-0 lg:ms-auto lg:flex-nowrap`}
         >
           {navItems.map((item) => {
             const active = item.href === '/' ? pathname === '/' : pathname.startsWith(item.href);

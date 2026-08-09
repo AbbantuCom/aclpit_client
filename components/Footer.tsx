@@ -23,7 +23,7 @@ export default async function Footer() {
 
   return (
     <footer className="footer">
-      <div className="max-w-7xl mx-auto px-6">
+      <div className="w-full px-6 lg:px-16">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-[2fr_1fr_1.5fr_1.5fr] gap-10 pb-12 border-b-2 border-white/10">
           <div className="footer-brand sm:col-span-2 lg:col-span-1">
             <Img src="/assets/logo-icon-white.png" alt="ACLPIT logo" />
