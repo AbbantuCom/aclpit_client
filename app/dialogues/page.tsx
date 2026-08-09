@@ -26,7 +26,7 @@ export default async function DialoguesPage() {
       />
 
       <section className="section">
-        <div className="max-w-7xl mx-auto px-6">
+        <div className="max-w-screen-2xl mx-auto px-6 lg:px-16">
           <DialoguesGrid items={sorted} />
           <div className="text-center mt-14 reveal">
             <p className="lead-lg mx-auto" style={{ maxWidth: 680 }}>

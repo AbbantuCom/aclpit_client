@@ -28,7 +28,7 @@ export default async function AboutPage() {
 
       {/* Background and Rationale */}
       <section className="section">
-        <div className="max-w-7xl mx-auto px-6">
+        <div className="max-w-screen-2xl mx-auto px-6 lg:px-16">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div className="reveal">
               <span className="eyebrow">{about.backgroundEyebrow}</span>
@@ -48,7 +48,7 @@ export default async function AboutPage() {
 
       {/* Vision & Mission */}
       <section className="section section-sand">
-        <div className="max-w-7xl mx-auto px-6">
+        <div className="max-w-screen-2xl mx-auto px-6 lg:px-16">
           <div className="grid lg:grid-cols-2 gap-6">
             <div className="detail-block reveal">
               <div className="card-icon"><i className="bi bi-eye" /></div>
@@ -66,7 +66,7 @@ export default async function AboutPage() {
 
       {/* Our Objectives */}
       <section className="section">
-        <div className="max-w-7xl mx-auto px-6">
+        <div className="max-w-screen-2xl mx-auto px-6 lg:px-16">
           <div className="text-center mb-14 reveal">
             <span className="eyebrow">Our Objectives</span>
             <h2>What we set out to achieve</h2>
@@ -92,7 +92,7 @@ export default async function AboutPage() {
 
       {/* Governance */}
       <section className="section section-sand">
-        <div className="max-w-7xl mx-auto px-6">
+        <div className="max-w-screen-2xl mx-auto px-6 lg:px-16">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div className="lg:order-2 reveal">
               <span className="eyebrow">{about.governanceEyebrow}</span>
@@ -116,7 +116,7 @@ export default async function AboutPage() {
 
       {/* Who We Serve */}
       <section className="section">
-        <div className="max-w-7xl mx-auto px-6">
+        <div className="max-w-screen-2xl mx-auto px-6 lg:px-16">
           <div className="text-center mb-14 reveal">
             <span className="eyebrow">Who We Serve</span>
             <h2>Stakeholders across the African legal and technology ecosystem</h2>

@@ -9,7 +9,7 @@ interface Props {
 export default function ContactCta({ title, description, buttonLabel = 'Contact Our Team' }: Props) {
   return (
     <section className="section section-wine">
-      <div className="max-w-7xl mx-auto px-6 text-center reveal">
+      <div className="max-w-screen-2xl mx-auto px-6 lg:px-16 text-center reveal">
         <span className="eyebrow on-dark">Get In Touch</span>
         <h2 className="mb-3">{title}</h2>
         <p className="lead-lg mx-auto mb-4" style={{ maxWidth: 700 }}>{description}</p>

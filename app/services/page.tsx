@@ -30,7 +30,7 @@ export default async function ServicesPage() {
         const imageFirst = i % 2 === 1;
         return (
           <section key={s.id} id={s.anchor} className={`section ${sand ? 'section-sand' : ''}`}>
-            <div className="max-w-7xl mx-auto px-6">
+            <div className="max-w-screen-2xl mx-auto px-6 lg:px-16">
               <div className="grid lg:grid-cols-2 gap-12 items-center">
                 <div className={`reveal ${imageFirst ? 'lg:order-2' : ''}`}>
                   <div className="card-icon"><i className={`bi ${s.icon}`} /></div>

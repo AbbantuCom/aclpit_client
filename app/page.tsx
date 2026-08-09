@@ -34,7 +34,7 @@ export default async function Home() {
     <>
       {/* ===================== Hero ===================== */}
       <header className="hero">
-        <div className="max-w-7xl mx-auto px-6">
+        <div className="max-w-screen-2xl mx-auto px-6 lg:px-16">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div className="reveal">
               <span className="kicker">{hero.kicker}</span>
@@ -67,7 +67,7 @@ export default async function Home() {
 
       {/* ===================== About Preview ===================== */}
       <section className="section section-sand" id="about-preview">
-        <div className="max-w-7xl mx-auto px-6">
+        <div className="max-w-screen-2xl mx-auto px-6 lg:px-16">
           <div className="grid lg:grid-cols-12 gap-12 items-center">
             <div className="lg:col-span-5 reveal">
               <div className="split-figure">
@@ -87,7 +87,7 @@ export default async function Home() {
 
       {/* ===================== Practice Areas Preview ===================== */}
       <section className="section" id="practice-preview">
-        <div className="max-w-7xl mx-auto px-6">
+        <div className="max-w-screen-2xl mx-auto px-6 lg:px-16">
           <div className="text-center mb-14 reveal">
             <span className="eyebrow">Practice Areas</span>
             <h2>Six pillars of law and public interest technology</h2>
@@ -113,7 +113,7 @@ export default async function Home() {
 
       {/* ===================== Why Us ===================== */}
       <section className="section section-sand" id="why-us">
-        <div className="max-w-7xl mx-auto px-6">
+        <div className="max-w-screen-2xl mx-auto px-6 lg:px-16">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div className="reveal">
               <span className="eyebrow">Why ACLPIT</span>
@@ -143,7 +143,7 @@ export default async function Home() {
 
       {/* ===================== Services Preview ===================== */}
       <section className="section section-wine" id="services-preview">
-        <div className="max-w-7xl mx-auto px-6">
+        <div className="max-w-screen-2xl mx-auto px-6 lg:px-16">
           <div className="text-center mb-14 reveal">
             <span className="eyebrow on-dark">What We Do</span>
             <h2>Services that carry ideas into impact</h2>

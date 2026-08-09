@@ -25,7 +25,7 @@ export default async function PracticeAreasPage() {
       />
 
       <section className="section">
-        <div className="max-w-7xl mx-auto px-6">
+        <div className="max-w-screen-2xl mx-auto px-6 lg:px-16">
           <div className="grid lg:grid-cols-2 gap-6">
             {sorted.map((a, i) => (
               <div key={a.id} id={a.anchor} className={`reveal ${i % 2 === 1 ? 'reveal-delay-1' : ''}`}>

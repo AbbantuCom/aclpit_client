@@ -97,7 +97,7 @@ export default function ContactSection({ data }: { data: ContactContent }) {
 
   return (
     <section className="section" id="contact">
-      <div className="max-w-7xl mx-auto px-6">
+      <div className="max-w-screen-2xl mx-auto px-6 lg:px-16">
         <div className="text-center mb-14 reveal">
           <span className="eyebrow">{data.subtitle}</span>
           <h2>{data.title}</h2>

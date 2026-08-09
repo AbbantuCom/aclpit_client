@@ -17,7 +17,7 @@ export default function PrivacyPage() {
       />
 
       <section className="section">
-        <div className="max-w-7xl mx-auto px-6">
+        <div className="max-w-screen-2xl mx-auto px-6 lg:px-16">
           <div className="flex justify-center">
             <div className="w-full lg:w-3/4">
               <div className="detail-block reveal visible">
