@@ -4,6 +4,7 @@ import './globals.css';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import CookieBanner from '@/components/CookieBanner';
+import PreviewBanner from '@/components/PreviewBanner';
 import RevealObserver from '@/components/RevealObserver';
 import QueryProvider from '@/components/QueryProvider';
 
@@ -22,6 +23,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           {children}
           <Footer />
           <CookieBanner />
+          <PreviewBanner />
           <RevealObserver />
         </QueryProvider>
       </body>
