@@ -6,6 +6,15 @@ interface ContentResponse<T> {
 }
 
 /**
+ * How long a single content read may take before we give up and use the fallback.
+ *
+ * Without this, a slow (not merely broken) admin API stalls a page past Next's
+ * 60-second per-page export limit and fails the whole build — the fallback only
+ * helps if we reach it in time. A healthy API answers in well under a second.
+ */
+const FETCH_TIMEOUT_MS = 8000;
+
+/**
  * Fetches a content section from the admin API.
  *
  * Normally this reads the *published* copy, tagged for on-demand revalidation via
@@ -39,6 +48,7 @@ export async function getSection<T>(section: ContentSection, fallback: T): Promi
 
   try {
     const res = await fetch(url, {
+      signal: AbortSignal.timeout(FETCH_TIMEOUT_MS),
       ...(useDraft
         ? { cache: 'no-store' as const, headers: { 'x-preview-secret': previewSecret as string } }
         : { next: { tags: [section], revalidate: 3600 } }),
@@ -52,7 +62,15 @@ export async function getSection<T>(section: ContentSection, fallback: T): Promi
     const json = (await res.json()) as ContentResponse<T>;
     return json.data ?? fallback;
   } catch (err) {
-    console.warn(`Failed to fetch "${section}" from the content API — using fallback content.`, err);
+    // Log the reason only — a DOMException (e.g. the timeout above) prints its
+    // entire constant table when passed as an object, drowning the build log.
+    const reason =
+      err instanceof Error
+        ? err.name === 'TimeoutError'
+          ? `no response within ${FETCH_TIMEOUT_MS}ms`
+          : `${err.name}: ${err.message}`
+        : String(err);
+    console.warn(`Failed to fetch "${section}" from the content API (${reason}) — using fallback content.`);
     return fallback;
   }
 }
