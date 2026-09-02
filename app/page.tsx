@@ -1,8 +1,9 @@
 import Link from 'next/link';
 import Img from '@/components/Img';
 import ContactSection from '@/components/ContactSection';
+import TeamGrid from '@/components/TeamGrid';
 import { getSection } from '@/lib/content-api';
-import { fallbackHero, fallbackAbout, fallbackServices, fallbackPracticeAreas, fallbackContact } from '@/lib/fallback-content';
+import { fallbackHero, fallbackAbout, fallbackServices, fallbackPracticeAreas, fallbackTeam, fallbackContact } from '@/lib/fallback-content';
 import { splitHighlight } from '@/lib/text';
 
 export const revalidate = 3600;
@@ -18,15 +19,22 @@ const whyItems = [
 const whyImage = 'https://images.pexels.com/photos/7446599/pexels-photo-7446599.jpeg';
 
 export default async function Home() {
-  const [hero, about, services, practiceAreas, contact] = await Promise.all([
+  const [hero, about, services, practiceAreas, team, contact] = await Promise.all([
     getSection('hero', fallbackHero),
     getSection('about', fallbackAbout),
     getSection('services', fallbackServices),
     getSection('practiceAreas', fallbackPracticeAreas),
+    getSection('team', fallbackTeam),
     getSection('contact', fallbackContact),
   ]);
 
   const sortedServices = [...services].sort((a, b) => a.order - b.order);
+  // Only the members ticked "show on home page" in the admin, in hierarchy order,
+  // capped so the row stays a single tidy grid however many are ticked.
+  const featuredTeam = [...team]
+    .filter((m) => m.featured)
+    .sort((a, b) => a.order - b.order)
+    .slice(0, 3);
   const sortedPracticeAreas = [...practiceAreas].sort((a, b) => a.order - b.order);
   const title = splitHighlight(hero.title, hero.titleHighlight);
 
@@ -168,6 +176,26 @@ export default async function Home() {
           </div>
         </div>
       </section>
+
+      {/* ===================== Team Preview ===================== */}
+      {featuredTeam.length > 0 && (
+        <section className="section section-sand" id="team-preview">
+          <div className="max-w-screen-2xl mx-auto px-6 lg:px-16">
+            <div className="text-center mb-14 reveal">
+              <span className="eyebrow">Our Team</span>
+              <h2>The people behind the Centre</h2>
+              <p className="lead-lg mx-auto" style={{ maxWidth: 760 }}>
+                Lawyers, researchers and policy specialists working at the intersection of law,
+                technology and the public interest.
+              </p>
+            </div>
+            <TeamGrid members={featuredTeam} />
+            <div className="text-center mt-14 reveal">
+              <Link className="btn btn-outline-wine" href="/team">Meet the Full Team</Link>
+            </div>
+          </div>
+        </section>
+      )}
 
       <ContactSection data={contact} />
     </>

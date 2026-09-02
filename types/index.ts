@@ -81,6 +81,24 @@ export interface PracticeArea {
   order: number;
 }
 
+/**
+ * A person on the Team page.
+ *
+ * `order` is the hierarchy set by dragging rows in the admin; `featured` marks the
+ * few who also appear in the home page preview.
+ */
+export interface TeamMember {
+  id: string;
+  name: string;
+  title: string;
+  bio: string;
+  image: string;
+  email: string;
+  linkedin: string;
+  featured: boolean;
+  order: number;
+}
+
 export interface PublicationItem {
   id: string;
   title: string;
@@ -132,6 +150,7 @@ export type ContentSection =
   | 'about'
   | 'services'
   | 'practiceAreas'
+  | 'team'
   | 'publications'
   | 'dialogues'
   | 'contact'
