@@ -72,7 +72,7 @@ export default function CookiesPage() {
                   current version of this policy is always available on this page.
                 </p>
                 <p>
-                  For questions about this policy, contact us at <a href="mailto:info@aclpit.org">info@aclpit.org</a>.
+                  For questions about this policy, contact us at <a href="mailto:info@aclpit.org">info@aclpit.com</a>.
                   See also our <Link href="/privacy">Privacy Policy</Link>.
                 </p>
               </div>
