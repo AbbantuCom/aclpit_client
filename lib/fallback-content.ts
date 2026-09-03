@@ -204,7 +204,7 @@ export const fallbackContact: ContactContent = {
   title: 'Let us shape Africa’s digital future together',
   subtitle: 'Contact Us',
   description: 'Whether you are a government, regulator, technology company, civil society organisation or researcher, we would like to hear from you.',
-  email: 'info@aclpit.org',
+  email: 'info@aclpit.com',
   phone: '+256 414 671 838',
   address: 'Plot 1 Lourdel Road, Lourdel Towers, 5th Floor',
   postalAddress: 'P.O. BOX 133174 Kampala–Uganda',
