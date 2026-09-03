@@ -65,7 +65,7 @@ export default function PrivacyPage() {
                 <p>
                   Subject to applicable law, you may request access to, correction of, or deletion of your personal
                   information, and you may object to or restrict certain processing. To exercise these rights,
-                  contact us at <a href="mailto:info@aclpit.org">info@aclpit.org</a>.
+                  contact us at <a href="mailto:info@aclpit.com">info@aclpit.com</a>.
                 </p>
 
                 <h2 className="h3 mt-12">7. Changes to This Policy</h2>
