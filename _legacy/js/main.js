@@ -65,7 +65,7 @@ document.addEventListener("DOMContentLoaded", function () {
         "\nArea of Interest: " + topic +
         "\nMessage: " + msg;
 // 
-      var mailto = "mailto:info@aclpit.org" +
+      var mailto = "mailto:info@aclpit.com" +
         "?subject=" + encodeURIComponent(subject) +
         "&body=" + encodeURIComponent(body);
       window.location.href = mailto;

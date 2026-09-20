@@ -68,7 +68,7 @@ export default function TermsPage() {
                 <p>
                   We may revise these terms from time to time, and the current version will always be published on
                   this page. Questions about these terms may be directed to{' '}
-                  <a href="mailto:info@aclpit.org">info@aclpit.org</a>.
+                  <a href="mailto:info@aclpit.com">info@aclpit.com</a>.
                 </p>
               </div>
             </div>

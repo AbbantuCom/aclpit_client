@@ -10,6 +10,7 @@ const navItems = [
   { label: 'About Us', href: '/about' },
   { label: 'Practice Areas', href: '/practice-areas' },
   { label: 'Services', href: '/services' },
+  { label: 'Our Team', href: '/team' },
   // Publications and Legal Tech Dialogues are built and live at /publications
   // and /dialogues, but stay out of the nav — mirrors the commented-out links
   // in every _legacy page while those sections are not yet ready to announce.
