@@ -32,7 +32,7 @@ export default async function Home() {
   // Only the members ticked "show on home page" in the admin, in hierarchy order,
   // capped so the row stays a single tidy grid however many are ticked.
   const featuredTeam = [...team]
-    .filter((m) => m.featured)
+    .filter((m) => m.featured && m.enabled !== false)
     .sort((a, b) => a.order - b.order)
     .slice(0, 3);
   const sortedPracticeAreas = [...practiceAreas].sort((a, b) => a.order - b.order);

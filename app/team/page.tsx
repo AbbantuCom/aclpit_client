@@ -16,7 +16,9 @@ export const metadata: Metadata = {
 export default async function TeamPage() {
   const team = await getSection('team', fallbackTeam);
   // `order` is the hierarchy an editor set by dragging rows in the admin panel.
-  const sorted = [...team].sort((a, b) => a.order - b.order);
+  // Disabled members are also stripped by the API, but a draft preview reads the
+  // editor's working copy whole — filter here so the preview matches publishing.
+  const sorted = team.filter((m) => m.enabled !== false).sort((a, b) => a.order - b.order);
 
   return (
     <>

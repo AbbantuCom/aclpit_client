@@ -12,7 +12,8 @@ export const revalidate = 3600;
 
 async function findMember(id: string): Promise<TeamMember | undefined> {
   const team = await getSection('team', fallbackTeam);
-  return team.find((m) => m.id === id);
+  // A disabled member's bio page doesn't exist for visitors (see TeamMember.enabled).
+  return team.find((m) => m.id === id && m.enabled !== false);
 }
 
 // No generateStaticParams: it runs without an HTTP request, so it cannot call

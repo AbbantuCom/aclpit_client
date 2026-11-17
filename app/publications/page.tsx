@@ -4,7 +4,9 @@ import PageBanner from '@/components/PageBanner';
 import ContactCta from '@/components/ContactCta';
 import PublicationsGrid from '@/components/PublicationsGrid';
 import { getSection } from '@/lib/content-api';
-import { fallbackPublications } from '@/lib/fallback-content';
+import { draftMode } from 'next/headers';
+import { notFound } from 'next/navigation';
+import { fallbackPublications, fallbackSettings } from '@/lib/fallback-content';
 
 export const revalidate = 3600;
 
@@ -14,8 +16,22 @@ export const metadata: Metadata = {
 };
 
 export default async function PublicationsPage() {
+  // Switched off from the dashboard → the page doesn't exist for visitors.
+  // Editors previewing from the admin still see it, so the content can be
+  // checked before the section is switched on.
+  const [settings, { isEnabled: isPreview }] = await Promise.all([
+    getSection('settings', fallbackSettings),
+    draftMode(),
+  ]);
+  if (!settings.publicationsEnabled && !isPreview) notFound();
+
   const publications = await getSection('publications', fallbackPublications);
-  const sorted = [...publications].sort((a, b) => a.order - b.order);
+  // The API already drops disabled items from the published copy, but a draft
+  // preview reads the editor's working copy whole — filter here too so the
+  // preview shows exactly what publishing would.
+  const sorted = publications
+    .filter((p) => p.enabled !== false)
+    .sort((a, b) => a.order - b.order);
 
   return (
     <>
