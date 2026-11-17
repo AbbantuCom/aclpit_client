@@ -12,7 +12,15 @@ import type {
   DialogueItem,
   ContactContent,
   FooterContent,
+  SiteSettings,
 } from '@/types';
+
+// Publications stays hidden unless the dashboard switch says otherwise — including
+// when the admin API can't be reached. Mirrors DEFAULT_SITE_SETTINGS in
+// aclpit_admin_api/lib/settings.ts.
+export const fallbackSettings: SiteSettings = {
+  publicationsEnabled: false,
+};
 
 export const fallbackHero: HeroContent = {
   kicker: 'Independent. Africa Rooted. Public Interest First.',

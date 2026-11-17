@@ -11,13 +11,16 @@ const navItems = [
   { label: 'Practice Areas', href: '/practice-areas' },
   { label: 'Services', href: '/services' },
   { label: 'Our Team', href: '/team' },
-  // Publications and Legal Tech Dialogues are built and live at /publications
-  // and /dialogues, but stay out of the nav — mirrors the commented-out links
-  // in every _legacy page while those sections are not yet ready to announce.
+  // Legal Tech Dialogues is built and live at /dialogues but stays out of the
+  // nav while it is not yet ready to announce. Publications is switched on and
+  // off from the admin dashboard — see `showPublications` below.
 ];
 
-export default function Navbar() {
+const publicationsItem = { label: 'Publications', href: '/publications' };
+
+export default function Navbar({ showPublications = false }: { showPublications?: boolean }) {
   const pathname = usePathname();
+  const items = showPublications ? [...navItems, publicationsItem] : navItems;
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
 
@@ -66,7 +69,7 @@ export default function Navbar() {
           id="mainNav"
           className={`${open ? 'flex' : 'hidden'} lg:flex w-full lg:w-auto flex-col lg:flex-row lg:items-center gap-1 lg:gap-5 mt-3 lg:mt-0 lg:ms-auto lg:flex-nowrap`}
         >
-          {navItems.map((item) => {
+          {items.map((item) => {
             const active = item.href === '/' ? pathname === '/' : pathname.startsWith(item.href);
             return (
               <Link
