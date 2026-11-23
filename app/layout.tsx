@@ -23,7 +23,10 @@ export default async function RootLayout({ children }: { children: React.ReactNo
     <html lang="en">
       <body>
         <QueryProvider>
-          <Navbar showPublications={settings.publicationsEnabled === true} />
+          <Navbar
+            showDialogues={settings.dialoguesEnabled === true}
+            showPublications={settings.publicationsEnabled === true}
+          />
           {children}
           <Footer />
           <CookieBanner />

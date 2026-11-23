@@ -15,11 +15,12 @@ import type {
   SiteSettings,
 } from '@/types';
 
-// Publications stays hidden unless the dashboard switch says otherwise — including
+// Publications and Dialogues stay hidden unless the dashboard switch says otherwise — including
 // when the admin API can't be reached. Mirrors DEFAULT_SITE_SETTINGS in
 // aclpit_admin_api/lib/settings.ts.
 export const fallbackSettings: SiteSettings = {
   publicationsEnabled: false,
+  dialoguesEnabled: false,
 };
 
 export const fallbackHero: HeroContent = {
