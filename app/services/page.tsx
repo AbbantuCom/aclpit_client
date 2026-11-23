@@ -8,7 +8,7 @@ import { fallbackServices } from '@/lib/fallback-content';
 export const revalidate = 3600;
 
 export const metadata: Metadata = {
-  title: 'Services | African Centre for Law and Public Interest Technology',
+  title: 'What We Do | African Centre for Law and Public Interest Technology',
   description:
     'Research and publications, technical advisory, training, multi stakeholder convening and public interest litigation from ACLPIT.',
 };
@@ -20,8 +20,8 @@ export default async function ServicesPage() {
   return (
     <>
       <PageBanner
-        breadcrumb="Services"
-        title="Our Services"
+        breadcrumb="What We Do"
+        title="What We Do"
         description="The Centre moves fluidly between generating evidence, shaping policy, building capacity and, where rights are at stake, pursuing accountability through the courts."
       />
 

@@ -149,12 +149,12 @@ export default async function Home() {
         </div>
       </section>
 
-      {/* ===================== Services Preview ===================== */}
+      {/* ===================== What We Do Preview ===================== */}
       <section className="section section-wine" id="services-preview">
         <div className="max-w-screen-2xl mx-auto px-6 lg:px-16">
           <div className="text-center mb-14 reveal">
             <span className="eyebrow on-dark">What We Do</span>
-            <h2>Services that carry ideas into impact</h2>
+            <h2>Work that carries ideas into impact</h2>
           </div>
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {sortedServices.map((s, i) => (
@@ -172,7 +172,7 @@ export default async function Home() {
             ))}
           </div>
           <div className="text-center mt-14 reveal">
-            <Link className="btn btn-ivory" href="/services">View All Services</Link>
+            <Link className="btn btn-ivory" href="/services">See All We Do</Link>
           </div>
         </div>
       </section>

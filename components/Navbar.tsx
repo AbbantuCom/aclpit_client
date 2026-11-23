@@ -9,7 +9,7 @@ const navItems = [
   { label: 'Home', href: '/' },
   { label: 'About Us', href: '/about' },
   { label: 'Practice Areas', href: '/practice-areas' },
-  { label: 'Services', href: '/services' },
+  { label: 'What We Do', href: '/services' },
   { label: 'Our Team', href: '/team' },
   // Legal Tech Dialogues and Publications are switched on and off from the
   // admin dashboard — see `showDialogues` / `showPublications` below.
