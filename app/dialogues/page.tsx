@@ -4,7 +4,9 @@ import PageBanner from '@/components/PageBanner';
 import ContactCta from '@/components/ContactCta';
 import DialoguesGrid from '@/components/DialoguesGrid';
 import { getSection } from '@/lib/content-api';
-import { fallbackDialogues } from '@/lib/fallback-content';
+import { draftMode } from 'next/headers';
+import { notFound } from 'next/navigation';
+import { fallbackDialogues, fallbackSettings } from '@/lib/fallback-content';
 
 export const revalidate = 3600;
 
@@ -14,6 +16,15 @@ export const metadata: Metadata = {
 };
 
 export default async function DialoguesPage() {
+  // Switched off from the dashboard → the page doesn't exist for visitors.
+  // Editors previewing from the admin still see it, so the content can be
+  // checked before the section is switched on.
+  const [settings, { isEnabled: isPreview }] = await Promise.all([
+    getSection('settings', fallbackSettings),
+    draftMode(),
+  ]);
+  if (!settings.dialoguesEnabled && !isPreview) notFound();
+
   const dialogues = await getSection('dialogues', fallbackDialogues);
   const sorted = [...dialogues].sort((a, b) => a.order - b.order);
 
