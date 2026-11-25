@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import Img from './Img';
@@ -11,12 +11,18 @@ const navItems = [
   { label: 'Practice Areas', href: '/practice-areas' },
   { label: 'What We Do', href: '/services' },
   { label: 'Our Team', href: '/team' },
-  // Legal Tech Dialogues and Publications are switched on and off from the
+  // Legal Tech Dialogues and News & Events are switched on and off from the
   // admin dashboard — see `showDialogues` / `showPublications` below.
 ];
 
 const dialoguesItem = { label: 'Dialogues', href: '/dialogues' };
-const publicationsItem = { label: 'Publications', href: '/publications' };
+
+const NEWS_BASE = '/news-and-events';
+const newsLinks = [
+  { label: 'News', href: `${NEWS_BASE}/news` },
+  { label: 'Events', href: `${NEWS_BASE}/events` },
+  { label: 'Newsletter', href: `${NEWS_BASE}/newsletter` },
+];
 
 export default function Navbar({
   showDialogues = false,
@@ -29,10 +35,29 @@ export default function Navbar({
   const items = [
     ...navItems,
     ...(showDialogues ? [dialoguesItem] : []),
-    ...(showPublications ? [publicationsItem] : []),
   ];
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+  const [newsOpen, setNewsOpen] = useState(false);
+  const newsRef = useRef<HTMLDivElement>(null);
+  const newsActive = pathname.startsWith(NEWS_BASE);
+
+  // Close the News & Events menu on a click elsewhere or on Escape.
+  useEffect(() => {
+    if (!newsOpen) return;
+    function onPointer(e: PointerEvent) {
+      if (newsRef.current && !newsRef.current.contains(e.target as Node)) setNewsOpen(false);
+    }
+    function onKey(e: KeyboardEvent) {
+      if (e.key === 'Escape') setNewsOpen(false);
+    }
+    document.addEventListener('pointerdown', onPointer);
+    document.addEventListener('keydown', onKey);
+    return () => {
+      document.removeEventListener('pointerdown', onPointer);
+      document.removeEventListener('keydown', onKey);
+    };
+  }, [newsOpen]);
 
   useEffect(() => {
     function onScroll() {
@@ -45,6 +70,7 @@ export default function Navbar({
 
   useEffect(() => {
     setOpen(false);
+    setNewsOpen(false);
   }, [pathname]);
 
   return (
@@ -93,6 +119,58 @@ export default function Navbar({
               </Link>
             );
           })}
+          {showPublications && (
+            <div
+              ref={newsRef}
+              className="relative w-full lg:w-auto"
+              onMouseEnter={() => window.matchMedia('(min-width: 1024px)').matches && setNewsOpen(true)}
+              onMouseLeave={() => window.matchMedia('(min-width: 1024px)').matches && setNewsOpen(false)}
+            >
+              <button
+                type="button"
+                onClick={() => setNewsOpen((o) => !o)}
+                aria-expanded={newsOpen}
+                aria-controls="newsMenu"
+                className={`w-full lg:w-auto flex items-center justify-between lg:justify-start gap-1.5 py-2.5 px-0 lg:px-3.5 text-[1rem] font-bold border-b lg:border-b-2 ${
+                  newsActive ? 'text-wine border-wine' : 'text-ink border-transparent hover:text-wine'
+                }`}
+              >
+                News &amp; Events
+                <svg
+                  width="12"
+                  height="12"
+                  viewBox="0 0 12 12"
+                  aria-hidden="true"
+                  className={`transition-transform ${newsOpen ? 'rotate-180' : ''}`}
+                >
+                  <path d="M2 4l4 4 4-4" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+              </button>
+              <div
+                id="newsMenu"
+                className={`${newsOpen ? 'block' : 'hidden'} lg:absolute lg:left-0 lg:top-full lg:pt-2 lg:min-w-[200px] z-50`}
+              >
+                <ul className="lg:bg-ivory lg:border lg:border-wine lg:rounded-[10px] lg:shadow-[0_10px_30px_rgba(64,8,42,0.12)] lg:py-2 ps-4 lg:ps-0">
+                  {newsLinks.map((link) => {
+                    const active = pathname === link.href;
+                    return (
+                      <li key={link.href}>
+                        <Link
+                          href={link.href}
+                          aria-current={active ? 'page' : undefined}
+                          className={`block py-2 lg:px-4 text-[0.98rem] font-bold ${
+                            active ? 'text-wine' : 'text-ink hover:text-wine lg:hover:bg-wine/5'
+                          }`}
+                        >
+                          {link.label}
+                        </Link>
+                      </li>
+                    );
+                  })}
+                </ul>
+              </div>
+            </div>
+          )}
           <Link
             href="/#contact"
             className="btn btn-wine mt-2 lg:mt-0 lg:ms-3 text-center"

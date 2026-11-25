@@ -15,7 +15,7 @@ import type {
   SiteSettings,
 } from '@/types';
 
-// Publications and Dialogues stay hidden unless the dashboard switch says otherwise — including
+// News & Events and Dialogues stay hidden unless the dashboard switch says otherwise — including
 // when the admin API can't be reached. Mirrors DEFAULT_SITE_SETTINGS in
 // aclpit_admin_api/lib/settings.ts.
 export const fallbackSettings: SiteSettings = {
@@ -177,21 +177,21 @@ export const fallbackTeam: TeamMember[] = [
 
 export const fallbackPublications: PublicationItem[] = [
   {
-    id: 'pub-borderless-identity', title: 'Borderless Identity', category: 'Policy Brief',
+    id: 'pub-borderless-identity', newsCategory: 'news', title: 'Borderless Identity', category: 'Policy Brief',
     description: 'This document examines the AfCFTA Digital Trade Protocol, focusing on implementation gaps in cross-border digital identity systems. It highlights challenges regarding mutual recognition, technical standardization, and KYC baselines, recommending mandatory continental assurance standards, trusted identity list criteria, and unified security incident management response frameworks.',
     fileUrl: 'https://drive.google.com/file/d/1IdFuBI1SRZb353gPZqOJB_tWNexyC11c/view',
     coverImage: 'https://drive.google.com/thumbnail?id=1IdFuBI1SRZb353gPZqOJB_tWNexyC11c&sz=w800',
     date: '', order: 1,
   },
   {
-    id: 'pub-e-discovery', title: 'E-Discovery and Litigation', category: 'Research Note',
+    id: 'pub-e-discovery', newsCategory: 'news', title: 'E-Discovery and Litigation', category: 'Research Note',
     description: 'This overview explores electronic discovery and evidence in litigation, explaining electronically stored information, admissibility, and judicial reliability factors. It outlines the seven-stage EDRM framework, addresses data protection balancing under Ugandan law, and emphasizes proportional application to prevent disproportionate financial burdens on smaller individual court litigants.',
     fileUrl: 'https://drive.google.com/file/d/1G0d0dGr_KJR81e9esAwN46S3sedbsGse/view',
     coverImage: 'https://drive.google.com/thumbnail?id=1G0d0dGr_KJR81e9esAwN46S3sedbsGse&sz=w800',
     date: '', order: 2,
   },
   {
-    id: 'pub-ip-financial-innovators', title: 'Intellectual Property Protection for Financial Innovators', category: 'Case Analysis',
+    id: 'pub-ip-financial-innovators', newsCategory: 'news', title: 'Intellectual Property Protection for Financial Innovators', category: 'Case Analysis',
     description: "Analyzing Kenya's landmark copyright judgment against Safaricom, this article discusses intellectual property protection for African fintech innovators. It outlines core IP categories, demonstrates how copyright protects specific product expressions rather than raw ideas, and urges Ugandan founders to thoroughly document and legalise software innovations early.",
     fileUrl: 'https://drive.google.com/file/d/1LJa9TnOPMjBNVwkjAYZLJ47k4pp9m1Oe/view',
     coverImage: 'https://drive.google.com/thumbnail?id=1LJa9TnOPMjBNVwkjAYZLJ47k4pp9m1Oe&sz=w800',
