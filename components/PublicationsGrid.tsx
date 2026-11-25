@@ -3,7 +3,10 @@
 import { useState } from 'react';
 import Img from './Img';
 import PdfModal from './PdfModal';
-import { NEWS_CATEGORY_LABELS, newsCategoryOf, type PublicationItem } from '@/types';
+import Link from 'next/link';
+import ShareButtons from './ShareButtons';
+import { resourceItemPath, shareSentence } from '@/lib/resources';
+import { NEWS_CATEGORY_LABELS, newsCategoryOf, type PublicationItem, type SharePlatformKey } from '@/types';
 
 function formatDate(iso: string): string | null {
   if (!iso) return null;
@@ -12,8 +15,18 @@ function formatDate(iso: string): string | null {
   return d.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
 }
 
-export default function PublicationsGrid({ items }: { items: PublicationItem[] }) {
+export default function PublicationsGrid({
+  items,
+  sharePlatforms = null,
+}: {
+  items: PublicationItem[];
+  /** Platforms to offer when sharing is switched on in the dashboard; null hides sharing. */
+  sharePlatforms?: SharePlatformKey[] | null;
+}) {
   const [active, setActive] = useState<PublicationItem | null>(null);
+  /** The card whose share buttons are showing, if any. */
+  const [sharing, setSharing] = useState<string | null>(null);
+  const canShare = Boolean(sharePlatforms && sharePlatforms.length > 0);
 
   return (
     <>
@@ -35,12 +48,35 @@ export default function PublicationsGrid({ items }: { items: PublicationItem[] }
                     </>
                   )}
                 </div>
-                <h3>{pub.title}</h3>
+                <h3>
+                  <Link href={resourceItemPath(pub.id)} className="hover:text-wine">{pub.title}</Link>
+                </h3>
                 <p>{pub.description}</p>
-                {pub.fileUrl && (
-                  <button type="button" className="card-link" onClick={() => setActive(pub)}>
-                    View PDF
-                  </button>
+                <div className="flex flex-wrap items-center gap-x-6 gap-y-3">
+                  {pub.fileUrl && (
+                    <button type="button" className="card-link" onClick={() => setActive(pub)}>
+                      View PDF
+                    </button>
+                  )}
+                  {canShare && (
+                    <button
+                      type="button"
+                      className="card-link"
+                      aria-expanded={sharing === pub.id}
+                      onClick={() => setSharing(sharing === pub.id ? null : pub.id)}
+                    >
+                      <i className="bi bi-share me-1" aria-hidden="true" /> Share
+                    </button>
+                  )}
+                </div>
+                {canShare && sharing === pub.id && (
+                  <ShareButtons
+                    path={resourceItemPath(pub.id)}
+                    title={pub.title}
+                    sentence={shareSentence(pub)}
+                    platforms={sharePlatforms ?? []}
+                    className="mt-4"
+                  />
                 )}
               </div>
             </article>
