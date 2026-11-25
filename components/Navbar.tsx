@@ -29,6 +29,12 @@ interface NavAction {
 
 type MenuEntry = NavLink | NavAction;
 
+/** A Resources category to list in the menu (worked out by the layout, which reads the content). */
+export interface ResourceMenuCategory {
+  key: string;
+  label: string;
+}
+
 type NavItem = NavLink | NavMenu;
 
 const homeItem: NavLink = { label: 'Home', href: '/' };
@@ -63,15 +69,14 @@ const whatWeDoMenu: NavMenu = {
 const dialoguesItem: NavLink = { label: 'Dialogues', href: '/dialogues' };
 
 const RESOURCES_BASE = '/resources';
-const researchLink: NavLink = { label: 'Research', href: `${RESOURCES_BASE}/research` };
-const publicationsLink: NavLink = { label: 'Publications', href: RESOURCES_BASE };
+const publicationsLink: NavLink = { label: 'All Publications', href: RESOURCES_BASE };
 
-/** Research is only offered once something is filed under it — no empty pages. */
-function resourcesMenu(hasResearch: boolean): NavMenu {
+/** A link per category that has something in it — the menu never leads to an empty page. */
+function resourcesMenu(categories: ResourceMenuCategory[]): NavMenu {
   return {
     label: 'Resources',
     activePaths: [RESOURCES_BASE],
-    links: hasResearch ? [researchLink, publicationsLink] : [publicationsLink],
+    links: [publicationsLink, ...categories.map((c) => ({ label: c.label, href: `${RESOURCES_BASE}/${c.key}` }))],
   };
 }
 
@@ -173,7 +178,7 @@ function NavDropdown({
           <Chevron open={open} />
         </button>
       )}
-      <div id={menuId} className={`${open ? 'block' : 'hidden'} lg:absolute lg:left-0 lg:top-full lg:pt-2 lg:min-w-[200px] z-50`}>
+      <div id={menuId} className={`${open ? 'block' : 'hidden'} lg:absolute lg:left-0 lg:top-full lg:pt-2 lg:min-w-[260px] z-50`}>
         <ul className="lg:bg-ivory lg:border lg:border-wine lg:rounded-[10px] lg:shadow-[0_10px_30px_rgba(64,8,42,0.12)] lg:py-2 ps-4 lg:ps-0">
           {menu.links.map((link) => {
             const entryClass = 'block w-full text-left py-2 lg:px-4 text-[0.98rem] font-bold';
@@ -216,13 +221,13 @@ function NavDropdown({
 export default function Navbar({
   showDialogues = false,
   showPublications = false,
-  hasResearch = false,
+  resourceCategories = [],
   companyProfileUrl = '',
 }: {
   showDialogues?: boolean;
   showPublications?: boolean;
-  /** Whether any published Resources entry is in the Research category. */
-  hasResearch?: boolean;
+  /** The Resources categories that have published entries, in menu order. */
+  resourceCategories?: ResourceMenuCategory[];
   /** The company profile PDF; when set, About Us offers "Profile" to view it. */
   companyProfileUrl?: string;
 }) {
@@ -234,7 +239,7 @@ export default function Navbar({
     aboutMenu(profileUrl ? () => setProfileOpen(true) : null),
     whatWeDoMenu,
     ...(showDialogues ? [dialoguesItem] : []),
-    ...(showPublications ? [resourcesMenu(hasResearch)] : []),
+    ...(showPublications ? [resourcesMenu(resourceCategories)] : []),
   ];
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);

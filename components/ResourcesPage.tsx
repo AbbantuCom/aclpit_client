@@ -6,24 +6,28 @@ import { getSection } from '@/lib/content-api';
 import { draftMode } from 'next/headers';
 import { notFound } from 'next/navigation';
 import { fallbackPublications, fallbackSettings } from '@/lib/fallback-content';
-import { NEWS_CATEGORIES, NEWS_CATEGORY_LABELS, newsCategoryOf, type NewsCategory } from '@/types';
+import { NEWS_CATEGORIES, NEWS_CATEGORY_LABELS, newsCategoryOf, sharePlatformsOf, type NewsCategory } from '@/types';
 
 export const RESOURCES_BASE = '/resources';
 
 const DESCRIPTIONS: Record<NewsCategory | 'all', string> = {
   all: 'Research, news, events and newsletters from the African Centre for Law and Public Interest Technology.',
-  research: 'Independent research on the legal, regulatory and ethical dimensions of emerging technologies, built for African contexts.',
+  research: 'Research reports and policy briefs on the legal, regulatory and ethical dimensions of emerging technologies, built for African contexts.',
+  'annual-reports': 'Our annual reports: a yearly account of the Centre’s work, impact and finances.',
   news: 'The latest news and commentary from the Centre.',
   events: 'Convenings, workshops, trainings and dialogues hosted by or featuring the Centre.',
   newsletter: 'Our newsletters, bringing together the Centre’s work and developments in law and technology across Africa.',
+  stories: 'Stories of the people, partners and communities behind the Centre’s work.',
 };
 
 const EMPTY: Record<NewsCategory | 'all', string> = {
   all: 'Nothing has been published yet.',
-  research: 'No research has been published yet.',
+  research: 'No research reports or policy briefs have been published yet.',
+  'annual-reports': 'No annual reports have been published yet.',
   news: 'No news has been posted yet.',
   events: 'No events have been posted yet.',
   newsletter: 'No newsletters have been posted yet.',
+  stories: 'No stories have been posted yet.',
 };
 
 /**
@@ -49,6 +53,7 @@ export default async function ResourcesPage({ category }: { category?: NewsCateg
   const live = all.filter((p) => p.enabled !== false).sort((a, b) => a.order - b.order);
   const items = category ? live.filter((p) => newsCategoryOf(p) === category) : live;
 
+  const sharePlatforms = settings.publicationSharingEnabled ? sharePlatformsOf(settings.publicationSharePlatforms) : null;
   const key = category ?? 'all';
   const heading = category ? NEWS_CATEGORY_LABELS[category] : 'Publications';
   const tabs = [
@@ -85,15 +90,15 @@ export default async function ResourcesPage({ category }: { category?: NewsCateg
           )}
 
           {items.length > 0 ? (
-            <PublicationsGrid items={items} />
+            <PublicationsGrid items={items} sharePlatforms={sharePlatforms} />
           ) : (
             <p className="lead-lg text-center">{EMPTY[key]}</p>
           )}
 
           <div className="text-center mt-14 reveal">
             <p className="lead-lg mx-auto" style={{ maxWidth: 680 }}>
-              Subscribe to our updates to be notified when we publish research, post news, announce events or release
-              a new newsletter.
+              Subscribe to our updates to be notified when we publish research, reports and stories, post news, announce
+              events or release a new newsletter.
             </p>
             <Link className="btn btn-wine mt-2" href="/#contact">Get Notified</Link>
           </div>
