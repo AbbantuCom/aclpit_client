@@ -8,7 +8,8 @@ import PreviewBanner from '@/components/PreviewBanner';
 import RevealObserver from '@/components/RevealObserver';
 import QueryProvider from '@/components/QueryProvider';
 import { getSection } from '@/lib/content-api';
-import { fallbackSettings } from '@/lib/fallback-content';
+import { fallbackAbout, fallbackPublications, fallbackSettings } from '@/lib/fallback-content';
+import { newsCategoryOf } from '@/types';
 
 export const metadata: Metadata = {
   title: 'African Centre for Law and Public Interest Technology | Law, Technology and the Public Interest in Africa',
@@ -17,7 +18,12 @@ export const metadata: Metadata = {
 };
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
-  const settings = await getSection('settings', fallbackSettings);
+  const [settings, resources, about] = await Promise.all([
+    getSection('settings', fallbackSettings),
+    getSection('publications', fallbackPublications),
+    getSection('about', fallbackAbout),
+  ]);
+  const hasResearch = resources.some((p) => p.enabled !== false && newsCategoryOf(p) === 'research');
 
   return (
     <html lang="en">
@@ -26,6 +32,8 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           <Navbar
             showDialogues={settings.dialoguesEnabled === true}
             showPublications={settings.publicationsEnabled === true}
+            hasResearch={hasResearch}
+            companyProfileUrl={about.companyProfileUrl ?? ''}
           />
           {children}
           <Footer />

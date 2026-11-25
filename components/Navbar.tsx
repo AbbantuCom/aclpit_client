@@ -1,9 +1,11 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
+import { createPortal } from 'react-dom';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import Img from './Img';
+import PdfModal from './PdfModal';
 
 interface NavLink {
   label: string;
@@ -16,23 +18,35 @@ interface NavMenu {
   href?: string;
   /** Path prefixes that mark this menu as the current section. */
   activePaths: string[];
-  links: NavLink[];
+  links: MenuEntry[];
 }
+
+/** A submenu entry that does something on the page instead of navigating. */
+interface NavAction {
+  label: string;
+  onSelect: () => void;
+}
+
+type MenuEntry = NavLink | NavAction;
 
 type NavItem = NavLink | NavMenu;
 
 const homeItem: NavLink = { label: 'Home', href: '/' };
 
-const aboutMenu: NavMenu = {
-  label: 'About Us',
-  href: '/about',
-  // Team biographies (/team/:id) belong to the About section too.
-  activePaths: ['/about', '/team'],
-  links: [
-    { label: 'Who We Are', href: '/about#who-we-are' },
-    { label: 'Our Team', href: '/about#our-team' },
-  ],
-};
+/** "Profile" — opening the company profile PDF — is only offered once one is uploaded. */
+function aboutMenu(openProfile: (() => void) | null): NavMenu {
+  return {
+    label: 'About Us',
+    href: '/about',
+    // Team biographies (/team/:id) belong to the About section too.
+    activePaths: ['/about', '/team'],
+    links: [
+      { label: 'Who We Are', href: '/about#who-we-are' },
+      { label: 'Our Team', href: '/about#our-team' },
+      ...(openProfile ? [{ label: 'Profile', onSelect: openProfile }] : []),
+    ],
+  };
+}
 
 const whatWeDoMenu: NavMenu = {
   label: 'What We Do',
@@ -43,21 +57,23 @@ const whatWeDoMenu: NavMenu = {
   ],
 };
 
-// Legal Tech Dialogues and News & Events are switched on and off from the
+// Legal Tech Dialogues and Resources are switched on and off from the
 // admin dashboard — see `showDialogues` / `showPublications` below.
 
 const dialoguesItem: NavLink = { label: 'Dialogues', href: '/dialogues' };
 
-const NEWS_BASE = '/news-and-events';
-const newsMenu: NavMenu = {
-  label: 'News & Events',
-  activePaths: [NEWS_BASE],
-  links: [
-    { label: 'News', href: `${NEWS_BASE}/news` },
-    { label: 'Events', href: `${NEWS_BASE}/events` },
-    { label: 'Newsletter', href: `${NEWS_BASE}/newsletter` },
-  ],
-};
+const RESOURCES_BASE = '/resources';
+const researchLink: NavLink = { label: 'Research', href: `${RESOURCES_BASE}/research` };
+const publicationsLink: NavLink = { label: 'Publications', href: RESOURCES_BASE };
+
+/** Research is only offered once something is filed under it — no empty pages. */
+function resourcesMenu(hasResearch: boolean): NavMenu {
+  return {
+    label: 'Resources',
+    activePaths: [RESOURCES_BASE],
+    links: hasResearch ? [researchLink, publicationsLink] : [publicationsLink],
+  };
+}
 
 const itemClass = (active: boolean) =>
   `py-2.5 px-0 lg:px-3.5 text-[1rem] font-bold border-b lg:border-b-2 ${
@@ -160,6 +176,23 @@ function NavDropdown({
       <div id={menuId} className={`${open ? 'block' : 'hidden'} lg:absolute lg:left-0 lg:top-full lg:pt-2 lg:min-w-[200px] z-50`}>
         <ul className="lg:bg-ivory lg:border lg:border-wine lg:rounded-[10px] lg:shadow-[0_10px_30px_rgba(64,8,42,0.12)] lg:py-2 ps-4 lg:ps-0">
           {menu.links.map((link) => {
+            const entryClass = 'block w-full text-left py-2 lg:px-4 text-[0.98rem] font-bold';
+            if ('onSelect' in link) {
+              return (
+                <li key={link.label}>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      follow();
+                      link.onSelect();
+                    }}
+                    className={`${entryClass} text-ink hover:text-wine lg:hover:bg-wine/5`}
+                  >
+                    {link.label}
+                  </button>
+                </li>
+              );
+            }
             const current = pathname === link.href;
             return (
               <li key={link.href}>
@@ -167,9 +200,7 @@ function NavDropdown({
                   href={link.href}
                   onClick={follow}
                   aria-current={current ? 'page' : undefined}
-                  className={`block py-2 lg:px-4 text-[0.98rem] font-bold ${
-                    current ? 'text-wine' : 'text-ink hover:text-wine lg:hover:bg-wine/5'
-                  }`}
+                  className={`${entryClass} ${current ? 'text-wine' : 'text-ink hover:text-wine lg:hover:bg-wine/5'}`}
                 >
                   {link.label}
                 </Link>
@@ -185,17 +216,25 @@ function NavDropdown({
 export default function Navbar({
   showDialogues = false,
   showPublications = false,
+  hasResearch = false,
+  companyProfileUrl = '',
 }: {
   showDialogues?: boolean;
   showPublications?: boolean;
+  /** Whether any published Resources entry is in the Research category. */
+  hasResearch?: boolean;
+  /** The company profile PDF; when set, About Us offers "Profile" to view it. */
+  companyProfileUrl?: string;
 }) {
   const pathname = usePathname();
+  const profileUrl = companyProfileUrl.trim();
+  const [profileOpen, setProfileOpen] = useState(false);
   const items: NavItem[] = [
     homeItem,
-    aboutMenu,
+    aboutMenu(profileUrl ? () => setProfileOpen(true) : null),
     whatWeDoMenu,
     ...(showDialogues ? [dialoguesItem] : []),
-    ...(showPublications ? [newsMenu] : []),
+    ...(showPublications ? [resourcesMenu(hasResearch)] : []),
   ];
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
@@ -264,6 +303,18 @@ export default function Navbar({
           </Link>
         </div>
       </div>
+
+      {/* Portalled to <body> so the sticky nav's stacking context can't trap it under the page. */}
+      {profileOpen && profileUrl &&
+        createPortal(
+          <PdfModal
+            title="Company Profile"
+            previewUrl={profileUrl}
+            downloadUrl={profileUrl}
+            onClose={() => setProfileOpen(false)}
+          />,
+          document.body
+        )}
     </nav>
   );
 }

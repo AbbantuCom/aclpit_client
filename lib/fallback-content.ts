@@ -15,7 +15,7 @@ import type {
   SiteSettings,
 } from '@/types';
 
-// News & Events and Dialogues stay hidden unless the dashboard switch says otherwise — including
+// Resources and Dialogues stay hidden unless the dashboard switch says otherwise — including
 // when the admin API can't be reached. Mirrors DEFAULT_SITE_SETTINGS in
 // aclpit_admin_api/lib/settings.ts.
 export const fallbackSettings: SiteSettings = {
