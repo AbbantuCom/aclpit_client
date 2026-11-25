@@ -7,20 +7,20 @@ import { fallbackPracticeAreas } from '@/lib/fallback-content';
 export const revalidate = 3600;
 
 export const metadata: Metadata = {
-  title: 'Practice Areas | African Centre for Law and Public Interest Technology',
+  title: 'Programs | African Centre for Law and Public Interest Technology',
   description:
     "ACLPIT's six thematic pillars: data protection, AI accountability, digital justice, fintech regulation, blockchain registries and digital rights.",
 };
 
-export default async function PracticeAreasPage() {
+export default async function ProgramsPage() {
   const areas = await getSection('practiceAreas', fallbackPracticeAreas);
   const sorted = [...areas].sort((a, b) => a.order - b.order);
 
   return (
     <>
       <PageBanner
-        breadcrumb="Practice Areas"
-        title="Our Practice Areas"
+        breadcrumb="Programs"
+        title="Our Programs"
         description="The Centre organises its work around six thematic pillars, each addressing a distinct but interconnected dimension of law and public interest technology in Africa."
       />
 

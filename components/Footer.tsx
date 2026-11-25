@@ -6,13 +6,13 @@ import { fallbackFooter, fallbackContact } from '@/lib/fallback-content';
 
 export const revalidate = 3600;
 
-const practiceAreaLinks = [
-  { label: 'Data Protection and Privacy', href: '/practice-areas#data' },
-  { label: 'AI and Accountability', href: '/practice-areas#ai' },
-  { label: 'Digital Justice', href: '/practice-areas#justice' },
-  { label: 'Fintech, Competition, and Consumer Protections', href: '/practice-areas#fintech' },
-  { label: 'Blockchain and Registries', href: '/practice-areas#blockchain' },
-  { label: 'Digital Rights', href: '/practice-areas#rights' },
+const programLinks = [
+  { label: 'Data Protection and Privacy', href: '/programs#data' },
+  { label: 'AI and Accountability', href: '/programs#ai' },
+  { label: 'Digital Justice', href: '/programs#justice' },
+  { label: 'Fintech, Competition, and Consumer Protections', href: '/programs#fintech' },
+  { label: 'Blockchain and Registries', href: '/programs#blockchain' },
+  { label: 'Digital Rights', href: '/programs#rights' },
 ];
 
 export default async function Footer() {
@@ -45,15 +45,15 @@ export default async function Footer() {
             <ul>
               <li><Link href="/">Home</Link></li>
               <li><Link href="/about">About Us</Link></li>
-              <li><Link href="/practice-areas">Practice Areas</Link></li>
-              <li><Link href="/services">What We Do</Link></li>
+              <li><Link href="/services">Services</Link></li>
+              <li><Link href="/programs">Programs</Link></li>
               <li><Link href="/#contact">Contact</Link></li>
             </ul>
           </div>
           <div>
-            <h4>Practice Areas</h4>
+            <h4>Programs</h4>
             <ul>
-              {practiceAreaLinks.map((l) => (
+              {programLinks.map((l) => (
                 <li key={l.href}><Link href={l.href}>{l.label}</Link></li>
               ))}
             </ul>

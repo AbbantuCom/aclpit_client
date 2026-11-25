@@ -93,11 +93,11 @@ export default async function Home() {
         </div>
       </section>
 
-      {/* ===================== Practice Areas Preview ===================== */}
+      {/* ===================== Programs Preview ===================== */}
       <section className="section" id="practice-preview">
         <div className="max-w-screen-2xl mx-auto px-6 lg:px-16">
           <div className="text-center mb-14 reveal">
-            <span className="eyebrow">Practice Areas</span>
+            <span className="eyebrow">Programs</span>
             <h2>Six pillars of law and public interest technology</h2>
             <p className="lead-lg mx-auto" style={{ maxWidth: 760 }}>
               Each pillar addresses a distinct but interconnected dimension of digital transformation across the
@@ -111,7 +111,7 @@ export default async function Home() {
                   <div className="card-icon"><i className={`bi ${p.icon}`} /></div>
                   <h3>{p.title}</h3>
                   <p>{p.description}</p>
-                  <Link className="card-link" href={`/practice-areas#${p.anchor}`}>Learn More</Link>
+                  <Link className="card-link" href={`/programs#${p.anchor}`}>Learn More</Link>
                 </div>
               </div>
             ))}
@@ -149,11 +149,11 @@ export default async function Home() {
         </div>
       </section>
 
-      {/* ===================== What We Do Preview ===================== */}
+      {/* ===================== Services Preview ===================== */}
       <section className="section section-wine" id="services-preview">
         <div className="max-w-screen-2xl mx-auto px-6 lg:px-16">
           <div className="text-center mb-14 reveal">
-            <span className="eyebrow on-dark">What We Do</span>
+            <span className="eyebrow on-dark">Services</span>
             <h2>Work that carries ideas into impact</h2>
           </div>
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -172,7 +172,7 @@ export default async function Home() {
             ))}
           </div>
           <div className="text-center mt-14 reveal">
-            <Link className="btn btn-ivory" href="/services">See All We Do</Link>
+            <Link className="btn btn-ivory" href="/services">See All Services</Link>
           </div>
         </div>
       </section>

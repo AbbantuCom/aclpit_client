@@ -21,6 +21,7 @@ import type {
 export const fallbackSettings: SiteSettings = {
   publicationsEnabled: false,
   dialoguesEnabled: false,
+  servicesImagesEnabled: true,
 };
 
 export const fallbackHero: HeroContent = {
@@ -32,7 +33,7 @@ export const fallbackHero: HeroContent = {
   primaryCtaText: 'Work With Us',
   primaryCtaHref: '/#contact',
   secondaryCtaText: 'Explore Our Focus',
-  secondaryCtaHref: '/practice-areas',
+  secondaryCtaHref: '/programs',
   image: 'https://images.pexels.com/photos/1367272/pexels-photo-1367272.jpeg',
   visionLabel: 'Our Vision',
   visionText:

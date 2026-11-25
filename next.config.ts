@@ -5,6 +5,8 @@ const nextConfig: NextConfig = {
     return [
       // Vanity shortcut to the hosting provider's webmail. Temporary (307) so the
       // browser re-asks each time and the target can move without stale caches.
+      // Practice Areas were renamed Programs.
+      { source: '/practice-areas', destination: '/programs', permanent: true },
       // The team now lives on the About page.
       { source: '/team', destination: '/about#our-team', permanent: true },
       // Publications became News & Events; keep old links working.
