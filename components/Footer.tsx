@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import Img from './Img';
+import SocialLinks from './SocialLinks';
 import CookiePreferencesLink from './CookiePreferencesLink';
 import { getSection } from '@/lib/content-api';
 import { fallbackFooter, fallbackContact } from '@/lib/fallback-content';
@@ -29,16 +30,7 @@ export default async function Footer() {
             <Img src="/assets/logo-icon-white.png" alt="ACLPIT logo" />
             <p><strong>{footer.copyrightName}</strong></p>
             <p>{footer.description}</p>
-            <div className="social-links mt-4">
-              {contact.socials.linkedin && (
-                <a href={contact.socials.linkedin} target="_blank" rel="noopener" aria-label="LinkedIn"><i className="bi bi-linkedin" /></a>
-              )}
-              <a href={contact.socials.twitter || '#'} aria-label="X"><i className="bi bi-twitter-x" /></a>
-              {contact.socials.youtube && (
-                <a href={contact.socials.youtube} target="_blank" rel="noopener" aria-label="YouTube"><i className="bi bi-youtube" /></a>
-              )}
-              <a href={contact.socials.facebook || '#'} aria-label="Facebook"><i className="bi bi-facebook" /></a>
-            </div>
+            <SocialLinks socials={contact.socials} className="mt-4" />
           </div>
           <div>
             <h4>Navigate</h4>

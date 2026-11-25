@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
-import NewsEventsPage from '@/components/NewsEventsPage';
+import ResourcesPage from '@/components/ResourcesPage';
 import { NEWS_CATEGORIES, NEWS_CATEGORY_LABELS, type NewsCategory } from '@/types';
 
 export const revalidate = 3600;
@@ -16,7 +16,7 @@ function isCategory(value: string): value is NewsCategory {
 
 export async function generateMetadata({ params }: { params: Promise<{ category: string }> }): Promise<Metadata> {
   const { category } = await params;
-  const label = isCategory(category) ? NEWS_CATEGORY_LABELS[category] : 'News & Events';
+  const label = isCategory(category) ? NEWS_CATEGORY_LABELS[category] : 'Resources';
   return {
     title: `${label} | African Centre for Law and Public Interest Technology`,
     description: `${label} from the African Centre for Law and Public Interest Technology.`,
@@ -26,5 +26,5 @@ export async function generateMetadata({ params }: { params: Promise<{ category:
 export default async function Page({ params }: { params: Promise<{ category: string }> }) {
   const { category } = await params;
   if (!isCategory(category)) notFound();
-  return <NewsEventsPage category={category} />;
+  return <ResourcesPage category={category} />;
 }

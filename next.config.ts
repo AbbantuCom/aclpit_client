@@ -9,8 +9,10 @@ const nextConfig: NextConfig = {
       { source: '/practice-areas', destination: '/programs', permanent: true },
       // The team now lives on the About page.
       { source: '/team', destination: '/about#our-team', permanent: true },
-      // Publications became News & Events; keep old links working.
-      { source: '/publications', destination: '/news-and-events', permanent: true },
+      // Publications became News & Events, then Resources; keep old links working.
+      { source: '/publications', destination: '/resources', permanent: true },
+      { source: '/news-and-events', destination: '/resources', permanent: true },
+      { source: '/news-and-events/:category', destination: '/resources/:category', permanent: true },
       { source: '/webmail', destination: 'https://server86.web-hosting.com:2096', permanent: false },
     ];
   },

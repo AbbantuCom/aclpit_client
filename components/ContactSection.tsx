@@ -3,6 +3,7 @@
 import { useState, type FormEvent } from 'react';
 import { useMutation } from '@tanstack/react-query';
 import type { ContactContent } from '@/types';
+import SocialLinks from './SocialLinks';
 
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -213,16 +214,7 @@ export default function ContactSection({ data }: { data: ContactContent }) {
                 referrerPolicy="no-referrer-when-downgrade"
               />
             </div>
-            <div className="social-links">
-              {data.socials.linkedin && (
-                <a href={data.socials.linkedin} target="_blank" rel="noopener" aria-label="LinkedIn"><i className="bi bi-linkedin" /></a>
-              )}
-              <a href={data.socials.twitter || '#'} aria-label="X"><i className="bi bi-twitter-x" /></a>
-              {data.socials.youtube && (
-                <a href={data.socials.youtube} target="_blank" rel="noopener" aria-label="YouTube"><i className="bi bi-youtube" /></a>
-              )}
-              <a href={data.socials.facebook || '#'} aria-label="Facebook"><i className="bi bi-facebook" /></a>
-            </div>
+            <SocialLinks socials={data.socials} />
           </div>
         </div>
       </div>
