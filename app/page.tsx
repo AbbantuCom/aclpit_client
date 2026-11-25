@@ -191,7 +191,7 @@ export default async function Home() {
             </div>
             <TeamGrid members={featuredTeam} />
             <div className="text-center mt-14 reveal">
-              <Link className="btn btn-outline-wine" href="/team">Meet the Full Team</Link>
+              <Link className="btn btn-outline-wine" href="/about#our-team">Meet the Full Team</Link>
             </div>
           </div>
         </section>
