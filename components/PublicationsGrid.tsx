@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import Img from './Img';
 import PdfModal from './PdfModal';
-import type { PublicationItem } from '@/types';
+import { NEWS_CATEGORY_LABELS, newsCategoryOf, type PublicationItem } from '@/types';
 
 function formatDate(iso: string): string | null {
   if (!iso) return null;
@@ -27,7 +27,7 @@ export default function PublicationsGrid({ items }: { items: PublicationItem[] }
               </div>
               <div className="card-body">
                 <div className="pub-meta">
-                  <span>{pub.category}</span>
+                  <span>{pub.category || NEWS_CATEGORY_LABELS[newsCategoryOf(pub)]}</span>
                   {date && (
                     <>
                       <span className="dot" />
@@ -39,7 +39,7 @@ export default function PublicationsGrid({ items }: { items: PublicationItem[] }
                 <p>{pub.description}</p>
                 {pub.fileUrl && (
                   <button type="button" className="card-link" onClick={() => setActive(pub)}>
-                    View Publication
+                    View PDF
                   </button>
                 )}
               </div>
