@@ -2,8 +2,10 @@ import type { Metadata } from 'next';
 import PageBanner from '@/components/PageBanner';
 import ContactCta from '@/components/ContactCta';
 import Img from '@/components/Img';
+import TeamGrid from '@/components/TeamGrid';
+import CompanyProfileButtons from '@/components/CompanyProfileButtons';
 import { getSection } from '@/lib/content-api';
-import { fallbackAbout } from '@/lib/fallback-content';
+import { fallbackAbout, fallbackTeam } from '@/lib/fallback-content';
 
 export const revalidate = 3600;
 
@@ -14,17 +16,28 @@ export const metadata: Metadata = {
 };
 
 export default async function AboutPage() {
-  const about = await getSection('about', fallbackAbout);
+  const [about, team] = await Promise.all([
+    getSection('about', fallbackAbout),
+    getSection('team', fallbackTeam),
+  ]);
+  // `order` is the hierarchy an editor set by dragging rows in the admin panel.
+  // Disabled members are also stripped by the API, but a draft preview reads the
+  // editor's working copy whole — filter here so the preview matches publishing.
+  const members = team.filter((m) => m.enabled !== false).sort((a, b) => a.order - b.order);
+  const profileUrl = about.companyProfileUrl?.trim();
   const objectives = about.objectives;
   const stakeholders = about.stakeholders;
 
   return (
     <>
       <PageBanner
+        id="who-we-are"
         breadcrumb="About Us"
         title="About the Centre"
         description="An independent, Africa rooted institution dedicated to shaping the legal, regulatory and policy environment for technology in a way that serves the public interest, protects fundamental rights and supports sustainable innovation across the continent."
-      />
+      >
+        {profileUrl && <CompanyProfileButtons url={profileUrl} />}
+      </PageBanner>
 
       {/* Background and Rationale */}
       <section className="section">
@@ -138,6 +151,27 @@ export default async function AboutPage() {
               );
             })}
           </div>
+        </div>
+      </section>
+
+      {/* Our Team — linked from the About menu as /about#our-team */}
+      <section className="section section-sand" id="our-team">
+        <div className="max-w-screen-2xl mx-auto px-6 lg:px-16">
+          <div className="text-center mb-14 reveal">
+            <span className="eyebrow">Our Team</span>
+            <h2>The people behind the Centre</h2>
+            <p className="lead-lg mx-auto mt-3" style={{ maxWidth: 760 }}>
+              Lawyers, researchers and policy specialists working at the intersection of law, technology and the
+              public interest in Africa.
+            </p>
+          </div>
+          {members.length > 0 ? (
+            <TeamGrid members={members} />
+          ) : (
+            <p className="lead-lg mx-auto text-center" style={{ maxWidth: 680 }}>
+              Our team will be introduced here shortly.
+            </p>
+          )}
         </div>
       </section>
 

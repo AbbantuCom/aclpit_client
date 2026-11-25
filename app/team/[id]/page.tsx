@@ -45,7 +45,7 @@ export default async function TeamMemberPage({ params }: { params: Promise<{ id:
       <header className="page-banner">
         <div className="max-w-screen-2xl mx-auto px-6 lg:px-16">
           <p className="breadcrumb-aclpit">
-            <Link href="/">Home</Link> &nbsp;/&nbsp; <Link href="/team">Our Team</Link> &nbsp;/&nbsp; {member.name}
+            <Link href="/">Home</Link> &nbsp;/&nbsp; <Link href="/about">About Us</Link> &nbsp;/&nbsp; <Link href="/about#our-team">Our Team</Link> &nbsp;/&nbsp; {member.name}
           </p>
           <h1 className="reveal visible">{member.name}</h1>
           <div className="arch-divider on-dark" aria-hidden="true"><span></span><span></span></div>
@@ -91,7 +91,7 @@ export default async function TeamMemberPage({ params }: { params: Promise<{ id:
               )}
 
               <div className="mt-10">
-                <Link className="btn btn-outline-wine" href="/team">← Back to the Team</Link>
+                <Link className="btn btn-outline-wine" href="/about#our-team">← Back to the Team</Link>
               </div>
             </div>
           </div>
