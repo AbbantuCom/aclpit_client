@@ -6,7 +6,7 @@ The public website for the **African Centre for Law and Public Interest Technolo
 
 ## Architecture
 
-This repo has **no database and no content editing UI**. All content (hero copy, about page, services, practice areas, publications, dialogues, contact details, footer) lives in a separate repo, **`aclpit_admin_api`**, which exposes it over a small HTTP API and provides the CMS admin panel editors write it through.
+This repo has **no database and no content editing UI**. All content (hero copy, about page, services, programs, news & events, dialogues, contact details, footer) lives in a separate repo, **`aclpit_admin_api`**, which exposes it over a small HTTP API and provides the CMS admin panel editors write it through.
 
 ```
 ┌─────────────────────┐        GET  /api/content/:section        ┌──────────────────────┐
@@ -47,10 +47,10 @@ aclpit_client/
 ├── _legacy/                   ← original static HTML/CSS/JS site, kept for reference
 │                                 (excluded from the build via tsconfig "exclude")
 ├── app/
-│   ├── page.tsx                ← Home (hero, about/services/practice-area previews, contact)
+│   ├── page.tsx                ← Home (hero, about/services/program previews, contact)
 │   ├── about/page.tsx
 │   ├── services/page.tsx
-│   ├── practice-areas/page.tsx
+│   ├── programs/page.tsx
 │   ├── publications/page.tsx
 │   ├── dialogues/page.tsx
 │   ├── privacy/page.tsx        ← static, no API fetch
@@ -81,7 +81,7 @@ aclpit_client/
 | `hero` | Home |
 | `about` | Home (preview) + About page |
 | `services` | Home (preview) + Services page |
-| `practiceAreas` | Home (preview) + Practice Areas page |
+| `practiceAreas` | Home (preview) + Programs page |
 | `publications` | Publications page |
 | `dialogues` | Dialogues page |
 | `contact` | Home (contact section) + Footer (contact column) |

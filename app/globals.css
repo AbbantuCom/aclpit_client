@@ -503,7 +503,7 @@ textarea:focus-visible {
 .breadcrumb-aclpit a { color: var(--color-stone); border-bottom: 2px solid var(--color-stone); }
 .breadcrumb-aclpit a:hover { color: #FFFFFF; }
 
-/* ---------- Detail blocks (practice areas / services pages) ---------- */
+/* ---------- Detail blocks (programs / services pages) ---------- */
 
 .detail-block { background: #FFFFFF; border: 1px solid var(--color-wine); border-radius: var(--radius-card); padding: 40px; height: 100%; }
 .detail-block .card-icon { margin-bottom: 18px; }

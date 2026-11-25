@@ -34,12 +34,17 @@ const aboutMenu: NavMenu = {
   ],
 };
 
-const fixedItems: NavLink[] = [
-  { label: 'Practice Areas', href: '/practice-areas' },
-  { label: 'What We Do', href: '/services' },
-  // Legal Tech Dialogues and News & Events are switched on and off from the
-  // admin dashboard — see `showDialogues` / `showPublications` below.
-];
+const whatWeDoMenu: NavMenu = {
+  label: 'What We Do',
+  activePaths: ['/services', '/programs'],
+  links: [
+    { label: 'Services', href: '/services' },
+    { label: 'Programs', href: '/programs' },
+  ],
+};
+
+// Legal Tech Dialogues and News & Events are switched on and off from the
+// admin dashboard — see `showDialogues` / `showPublications` below.
 
 const dialoguesItem: NavLink = { label: 'Dialogues', href: '/dialogues' };
 
@@ -188,7 +193,7 @@ export default function Navbar({
   const items: NavItem[] = [
     homeItem,
     aboutMenu,
-    ...fixedItems,
+    whatWeDoMenu,
     ...(showDialogues ? [dialoguesItem] : []),
     ...(showPublications ? [newsMenu] : []),
   ];
