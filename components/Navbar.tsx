@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import Img from './Img';
 import PdfModal from './PdfModal';
+import { COMPANY_PROFILE_DOWNLOAD, COMPANY_PROFILE_FILENAME } from './CompanyProfileButtons';
 
 interface NavLink {
   label: string;
@@ -315,7 +316,8 @@ export default function Navbar({
           <PdfModal
             title="Company Profile"
             previewUrl={profileUrl}
-            downloadUrl={profileUrl}
+            downloadUrl={COMPANY_PROFILE_DOWNLOAD}
+            downloadFileName={COMPANY_PROFILE_FILENAME}
             onClose={() => setProfileOpen(false)}
           />,
           document.body

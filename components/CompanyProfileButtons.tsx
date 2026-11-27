@@ -2,6 +2,11 @@
 
 import { useState } from 'react';
 import PdfModal from './PdfModal';
+import DirectDownloadLink from './DirectDownloadLink';
+
+/** Same-origin route (app/api/company-profile) that returns the PDF as an attachment. */
+export const COMPANY_PROFILE_DOWNLOAD = '/api/company-profile';
+export const COMPANY_PROFILE_FILENAME = 'ACLPIT-Company-Profile.pdf';
 
 /**
  * "Download Company Profile" and "View" buttons for the About page banner.
@@ -13,12 +18,14 @@ export default function CompanyProfileButtons({ url }: { url: string }) {
   return (
     <>
       <div className="flex flex-wrap gap-3">
-        {/* `download` only applies to same-origin files; for files on the media
-            host the browser opens the PDF in a new tab instead. */}
-        <a className="btn btn-ivory" href={url} download target="_blank" rel="noopener noreferrer">
+        <DirectDownloadLink
+          className="btn btn-ivory"
+          href={COMPANY_PROFILE_DOWNLOAD}
+          filename={COMPANY_PROFILE_FILENAME}
+        >
           <i className="bi bi-download me-2" />
           Download Company Profile
-        </a>
+        </DirectDownloadLink>
         <button type="button" className="btn btn-outline-ivory" onClick={() => setViewing(true)}>
           <i className="bi bi-eye me-2" />
           View
@@ -29,7 +36,8 @@ export default function CompanyProfileButtons({ url }: { url: string }) {
         <PdfModal
           title="Company Profile"
           previewUrl={url}
-          downloadUrl={url}
+          downloadUrl={COMPANY_PROFILE_DOWNLOAD}
+          downloadFileName={COMPANY_PROFILE_FILENAME}
           onClose={() => setViewing(false)}
         />
       )}
