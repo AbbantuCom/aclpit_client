@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 
-interface Props extends React.ImgHTMLAttributes<HTMLImageElement> {
+interface Props extends React.ComponentProps<'img'> {
   src: string;
   alt: string;
   fallback?: string;

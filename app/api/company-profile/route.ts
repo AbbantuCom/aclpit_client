@@ -1,5 +1,6 @@
 import { getSection } from '@/lib/content-api';
 import { fallbackAbout } from '@/lib/fallback-content';
+import { toDirectFileUrl } from '@/lib/remote-file';
 
 const FILENAME = 'ACLPIT-Company-Profile.pdf';
 
@@ -53,24 +54,4 @@ export async function GET() {
   } catch {
     return Response.redirect(raw, 302);
   }
-}
-
-/** Turns Google Drive / Dropbox share links into links that return the file itself. */
-function toDirectFileUrl(raw: string): string {
-  let url: URL;
-  try {
-    url = new URL(raw);
-  } catch {
-    return raw;
-  }
-  if (url.hostname === 'drive.google.com') {
-    const id = url.pathname.match(/\/file\/d\/([^/]+)/)?.[1] ?? url.searchParams.get('id');
-    if (id) return `https://drive.google.com/uc?export=download&id=${encodeURIComponent(id)}`;
-  }
-  if (url.hostname.endsWith('dropbox.com')) {
-    url.searchParams.delete('dl');
-    url.searchParams.set('dl', '1');
-    return url.toString();
-  }
-  return url.toString();
 }
