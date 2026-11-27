@@ -1,15 +1,19 @@
 'use client';
 
 import { useEffect } from 'react';
+import DirectDownloadLink from './DirectDownloadLink';
 
 interface Props {
   previewUrl: string;
   downloadUrl: string;
+  /** Set for same-origin files: the Download button then saves the file directly
+   *  (see DirectDownloadLink) instead of following the link. */
+  downloadFileName?: string;
   title: string;
   onClose: () => void;
 }
 
-export default function PdfModal({ previewUrl, downloadUrl, title, onClose }: Props) {
+export default function PdfModal({ previewUrl, downloadUrl, downloadFileName, title, onClose }: Props) {
   useEffect(() => {
     function onKeyDown(e: KeyboardEvent) {
       if (e.key === 'Escape') onClose();
@@ -30,9 +34,15 @@ export default function PdfModal({ previewUrl, downloadUrl, title, onClose }: Pr
         <div className="aclpit-modal-header flex items-center justify-between px-5 py-4">
           <h5 className="!text-inherit !m-0 text-base font-bold">{title}</h5>
           <div className="flex items-center gap-4">
-            <a href={downloadUrl} download className="btn btn-wine !py-2 !px-5 !text-xs">
-              <i className="bi bi-download me-1" /> Download
-            </a>
+            {downloadFileName ? (
+              <DirectDownloadLink href={downloadUrl} filename={downloadFileName} className="btn btn-wine !py-2 !px-5 !text-xs">
+                <i className="bi bi-download me-1" /> Download
+              </DirectDownloadLink>
+            ) : (
+              <a href={downloadUrl} download className="btn btn-wine !py-2 !px-5 !text-xs">
+                <i className="bi bi-download me-1" /> Download
+              </a>
+            )}
             <button type="button" onClick={onClose} aria-label="Close" className="text-2xl leading-none text-sand hover:text-white">
               &times;
             </button>
