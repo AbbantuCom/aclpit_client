@@ -1,15 +1,16 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import { draftMode } from 'next/headers';
 import { notFound } from 'next/navigation';
-import Img from '@/components/Img';
+import PublicationCoverLayout from '@/components/PublicationCoverLayout';
+import DirectDownloadLink from '@/components/DirectDownloadLink';
 import ContactCta from '@/components/ContactCta';
 import ShareButtons from '@/components/ShareButtons';
 import ViewPdfButton from '@/components/ViewPdfButton';
 import { getSection } from '@/lib/content-api';
-import { fallbackPublications, fallbackSettings } from '@/lib/fallback-content';
-import { resourceItemPath, shareSentence, SITE_URL } from '@/lib/resources';
-import { NEWS_CATEGORY_LABELS, newsCategoryOf, sharePlatformsOf, type PublicationItem } from '@/types';
+import { fallbackSettings } from '@/lib/fallback-content';
+import { findVisiblePublication as findItem } from '@/lib/publications';
+import { coverSrc, resourceDownloadName, resourceDownloadPath, resourceItemPath, shareSentence, SITE_URL } from '@/lib/resources';
+import { NEWS_CATEGORY_LABELS, newsCategoryOf, sharePlatformsOf } from '@/types';
 
 export const revalidate = 3600;
 
@@ -17,17 +18,6 @@ const SITE = 'African Centre for Law and Public Interest Technology';
 
 // Rendered on demand, like the team bio pages: the content fetch underneath is
 // cached and tag-revalidated, and a newly added item works straight away.
-
-/** The entry, if visitors may see it: Resources switched on (or previewing) and the item enabled. */
-async function findItem(id: string): Promise<PublicationItem | undefined> {
-  const [settings, { isEnabled: isPreview }] = await Promise.all([
-    getSection('settings', fallbackSettings),
-    draftMode(),
-  ]);
-  if (!settings.publicationsEnabled && !isPreview) return undefined;
-  const items = await getSection('publications', fallbackPublications);
-  return items.find((p) => p.id === id && p.enabled !== false);
-}
 
 function formatDate(iso: string): string | null {
   if (!iso) return null;
@@ -101,58 +91,62 @@ export default async function ResourceItemPage({ params }: { params: Promise<{ i
 
       <section className="section">
         <div className="max-w-screen-2xl mx-auto px-6 lg:px-16">
-          <div className="grid lg:grid-cols-12 gap-12 items-start">
-            {item.coverImage && (
-              <div className="lg:col-span-4 reveal">
-                <div className="card-aclpit">
-                  <div className="placeholder-media pdf-cover !h-auto aspect-[3/4]" role="img" aria-label={`${item.title} cover`}>
-                    <Img src={item.coverImage} alt="" />
-                  </div>
-                </div>
+          {/* The whole cover at its own proportions; the layout follows its shape. */}
+          <PublicationCoverLayout src={item.coverImage ? coverSrc(item) : ''} alt={`Cover of ${item.title}`}>
+            <div className="pub-meta">
+              <span>{item.category || NEWS_CATEGORY_LABELS[category]}</span>
+              {date && (
+                <>
+                  <span className="dot" />
+                  <span>{date}</span>
+                </>
+              )}
+            </div>
+            {item.description
+              .split(/\n{2,}/)
+              .filter(Boolean)
+              .map((paragraph, i) => (
+                <p key={i} className={i === 0 ? 'lead-lg mt-3' : ''}>{paragraph}</p>
+              ))}
+
+            {item.fileUrl && (
+              <div className="mt-8 flex flex-wrap gap-3">
+                <DirectDownloadLink
+                  href={resourceDownloadPath(item.id)}
+                  filename={resourceDownloadName(item)}
+                  className="btn btn-wine"
+                >
+                  <i className="bi bi-download me-2" aria-hidden="true" />
+                  Download PDF
+                </DirectDownloadLink>
+                <ViewPdfButton
+                  url={item.fileUrl}
+                  title={item.title}
+                  label="Read Online"
+                  className="btn btn-outline-wine"
+                  downloadUrl={resourceDownloadPath(item.id)}
+                  downloadFileName={resourceDownloadName(item)}
+                />
               </div>
             )}
 
-            <div className={`${item.coverImage ? 'lg:col-span-8' : 'lg:col-span-12'} reveal reveal-delay-1`}>
-              <div className="pub-meta">
-                <span>{item.category || NEWS_CATEGORY_LABELS[category]}</span>
-                {date && (
-                  <>
-                    <span className="dot" />
-                    <span>{date}</span>
-                  </>
-                )}
-              </div>
-              {item.description
-                .split(/\n{2,}/)
-                .filter(Boolean)
-                .map((paragraph, i) => (
-                  <p key={i} className={i === 0 ? 'lead-lg mt-3' : ''}>{paragraph}</p>
-                ))}
-
-              {item.fileUrl && (
-                <div className="mt-6">
-                  <ViewPdfButton url={item.fileUrl} title={item.title} />
-                </div>
-              )}
-
-              {sharePlatforms.length > 0 && (
-                <div className="mt-10">
-                  <span className="eyebrow">Share</span>
-                  <ShareButtons
-                    path={resourceItemPath(item.id)}
-                    title={item.title}
-                    sentence={shareSentence(item)}
-                    platforms={sharePlatforms}
-                    className="mt-3"
-                  />
-                </div>
-              )}
-
+            {sharePlatforms.length > 0 && (
               <div className="mt-10">
-                <Link className="btn btn-outline-wine" href="/resources">← Back to Publications</Link>
+                <span className="eyebrow">Share</span>
+                <ShareButtons
+                  path={resourceItemPath(item.id)}
+                  title={item.title}
+                  sentence={shareSentence(item)}
+                  platforms={sharePlatforms}
+                  className="mt-3"
+                />
               </div>
+            )}
+
+            <div className="mt-10">
+              <Link className="btn btn-outline-wine" href="/resources">← Back to Publications</Link>
             </div>
-          </div>
+          </PublicationCoverLayout>
         </div>
       </section>
 

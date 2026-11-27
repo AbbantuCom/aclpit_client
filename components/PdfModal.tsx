@@ -2,6 +2,7 @@
 
 import { useEffect } from 'react';
 import DirectDownloadLink from './DirectDownloadLink';
+import { toEmbeddablePdfUrl } from '@/lib/remote-file';
 
 interface Props {
   previewUrl: string;
@@ -48,7 +49,8 @@ export default function PdfModal({ previewUrl, downloadUrl, downloadFileName, ti
             </button>
           </div>
         </div>
-        <iframe src={previewUrl} title={title} className="pdf-modal-frame" />
+        {/* Drive's own "view" page refuses to be framed; its "preview" page is made for it. */}
+        <iframe src={toEmbeddablePdfUrl(previewUrl)} title={title} className="pdf-modal-frame" />
       </div>
     </div>
   );
