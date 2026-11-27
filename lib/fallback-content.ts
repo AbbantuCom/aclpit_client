@@ -10,6 +10,7 @@ import type {
   TeamMember,
   PublicationItem,
   DialogueItem,
+  CareersContent,
   ContactContent,
   FooterContent,
   SiteSettings,
@@ -209,6 +210,16 @@ export const fallbackDialogues: DialogueItem[] = [
   { id: 'dlg-digital-revolution-left-behind', youtubeUrl: 'https://www.youtube.com/watch?v=zlCjAkwA92k', category: 'Legal Tech', title: "Who Is Being Left Behind in Uganda's Digital Revolution? | Simon Kaggwa Njala", description: "Simon Kaggwa Njala joins Legal Tech Dialogues to discuss who is being left behind in Uganda's digital revolution.", order: 6 },
   { id: 'dlg-competition-law-fintech', youtubeUrl: 'https://www.youtube.com/watch?v=6wlrKHCiEmI', category: 'Capacity Building Initiatives', title: 'Competition Law Compliance Training for Fintech Service Providers in Uganda', description: 'A capacity building training session on competition law compliance for fintech service providers in Uganda.', order: 7 },
 ];
+
+// Mirrors defaultCareers in aclpit_admin_api/lib/seed-data.ts.
+export const fallbackCareers: CareersContent = {
+  intro:
+    'Join a team working at the intersection of law, technology and the public interest across Africa. Current openings are listed below.',
+  applicationEmail: 'info@aclpit.com',
+  howToApply:
+    'Send your CV and a cover letter explaining your interest in the role, with the job title in the subject line.',
+  jobs: [],
+};
 
 export const fallbackContact: ContactContent = {
   title: 'Let us shape Africa’s digital future together',

@@ -69,6 +69,12 @@ const whatWeDoMenu: NavMenu = {
 
 const dialoguesItem: NavLink = { label: 'Dialogues', href: '/dialogues' };
 
+const getInvolvedMenu: NavMenu = {
+  label: 'Get Involved',
+  activePaths: ['/careers'],
+  links: [{ label: 'Careers', href: '/careers' }],
+};
+
 const RESOURCES_BASE = '/resources';
 const publicationsLink: NavLink = { label: 'All Publications', href: RESOURCES_BASE };
 
@@ -241,6 +247,7 @@ export default function Navbar({
     whatWeDoMenu,
     ...(showDialogues ? [dialoguesItem] : []),
     ...(showPublications ? [resourcesMenu(resourceCategories)] : []),
+    getInvolvedMenu,
   ];
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
